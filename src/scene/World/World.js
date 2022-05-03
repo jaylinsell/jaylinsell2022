@@ -1,5 +1,7 @@
+import * as THREE from 'three'
 import Experience from '@/scene'
 import Floor from './Floor'
+import Head from './Head'
 
 export default class World {
   constructor () {
@@ -7,11 +9,13 @@ export default class World {
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 
+    this.floor = new Floor()
+
     // wait for the resources
     this.resources.on('ready', () => {
       console.log('ready')
       // setup
-      this.floor = new Floor()
+      this.head = new Head()
     })
   }
 

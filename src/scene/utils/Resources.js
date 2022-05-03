@@ -20,6 +20,7 @@ export default class Resources extends EventEmitter {
 
   setLoaders () {
     this.loaders = {}
+    this.loaders.textureLoader = new THREE.TextureLoader()
     this.loaders.dracoLoader = new DRACOLoader()
     this.loaders.gltfLoader = new GLTFLoader()
 
@@ -28,11 +29,15 @@ export default class Resources extends EventEmitter {
   }
 
   startLoaders () {
-    const { gltfLoader } = this.loaders
+    const { gltfLoader, textureLoader } = this.loaders
 
     for (const source of this.sources) {
       if (source.type === 'gltfModel') {
         gltfLoader.load(source.path, file => this.sourceLoaded(source, file))
+      }
+
+      if (source.type === 'texture') {
+        textureLoader.load(source.path, file => this.sourceLoaded(source, file))
       }
     }
   }

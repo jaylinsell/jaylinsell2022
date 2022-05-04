@@ -24,6 +24,7 @@ export default class Head {
     this.setTextures()
     this.setModel()
     this.setEye()
+    this.setMorphTargets()
     this.setDebug()
   }
 
@@ -34,6 +35,7 @@ export default class Head {
     this.matCaps.eyeMatCap = 'matCap34'
     this.matCaps.hairMatCap = 'matCap37'
     this.matCaps.stretcherMatCap = 'matCap39'
+    this.matCaps.toothMatCap = 'matCap30'
 
     this.matCapReferences = {
       head: 'headMatCap',
@@ -42,6 +44,7 @@ export default class Head {
       eye: 'eyeMatCap',
       hair: 'hairMatCap',
       stretcher: 'stretcherMatCap',
+      tooth: 'toothMatCap',
     }
   }
 
@@ -54,6 +57,10 @@ export default class Head {
     // set the blender model
     this.model = this.resource.scene
     this.model.rotation.y = Math.PI
+
+    // store the actual child instance of the 'head' item from blender so we can update morph targets
+    this.headMesh = this.model.getObjectByName('head')
+
 
     // For each 'object' type, we apply the corresponding matcap, ie stiches, bones, etc
     this.model.traverse(child => {
@@ -75,12 +82,27 @@ export default class Head {
     this.headModel.add(this.eye.eyeModel)
   }
 
+  setMorphTargets () {
+    const {
+      moveHitRight,
+      moveLeftEyebrow,
+      moveMouth,
+      moveRightEyebrowAngry,
+      moveSad
+    } = this.headMesh.morphTargetDictionary
+
+    this.headMesh.morphTargetInfluences[moveMouth] = 0
+    this.headMesh.morphTargetInfluences[moveLeftEyebrow] = 0
+  }
+
   setDebug () {
     if (this.debug) {
       const debugFolder = this.debug.ui.addFolder('Head')
       const matcapFolder = debugFolder.addFolder('matcaps')
+      const expressionsFolder = debugFolder.addFolder('expressions')
 
       // matCaps
+      matcapFolder.close() // close folder by default
       const matcapResources = [...new Array(44)].map((cap, ind) => `matCap${ind}`)
 
       // For each item type modelled, we want to add a matcap selector and update the corresponding values in the ui
@@ -96,6 +118,15 @@ export default class Head {
             }
           })
         })
+      })
+
+      // Add morph targets / facial expressions
+      Object.keys(this.headMesh.morphTargetDictionary).forEach(key => {
+        expressionsFolder
+          .add(this.headMesh.morphTargetInfluences, this.headMesh.morphTargetDictionary[key])
+          .min(0)
+          .max(1)
+          .name(key)
       })
 
     }

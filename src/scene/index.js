@@ -47,6 +47,15 @@ export default class Scene {
     this.time.on('tick', () => {
       this.update()
     })
+
+    this.light = new THREE.DirectionalLight("#ffffff", 1)
+    this.light.position.set(10, 10, 10)
+    this.light.castShadow = true
+
+    this.light.shadow.camera.far = 30
+
+    this.scene.add(this.light)
+    this.scene.add(this.light.target)
   }
 
   resize () {

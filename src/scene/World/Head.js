@@ -52,6 +52,7 @@ export default class Head {
     // Set the head model group
     this.headModel.position.x = 2
     this.headModel.rotation.y = -Math.PI * 0.05
+    this.headModel.castShadow = true
     this.scene.add(this.headModel)
 
     // set the blender model
@@ -70,6 +71,10 @@ export default class Head {
         if (child.name.includes(key)) {
           child.material = new THREE.MeshMatcapMaterial({ matcap: this.resources.items[correspondingMatcap]})
           child.material.needsUpdate = true
+
+          // TODO Validate the performance of this. Might bake the textures and mock the shadows instead
+          child.castShadow = true
+          child.receiveShadow = true
         }
       })
     })

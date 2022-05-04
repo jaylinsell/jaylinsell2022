@@ -1,3 +1,6 @@
+/*
+  This is a tweaked version of Bruno Simons EventEmitter; credit goes to Bruno.
+*/
 export default class EventEmitter {
   constructor() {
       this.callbacks = {}

@@ -17,7 +17,7 @@ export default class Floor {
   }
 
   setMaterial () {
-    this.material = new THREE.MeshBasicMaterial({ color: this.experience.colors.backgroundLight })
+    this.material = new THREE.MeshStandardMaterial({ color: this.experience.colors.backgroundLight })
   }
 
   setMesh () {

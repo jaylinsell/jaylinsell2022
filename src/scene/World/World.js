@@ -10,7 +10,8 @@ export default class World {
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 
-    // this.floor = new Floor()
+    this.floor = new Floor()
+    this.floor.receiveShadow = true
 
     // wait for the resources
     this.resources.on('ready', () => {

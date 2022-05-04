@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Debugger from './utils/Debugger'
 import Sizes from './utils/Sizes'
 import Time from './utils/Time'
+import MousePosition from './utils/MousePosition'
 import Colors from './utils/Colors'
 import Resources from './utils/Resources'
 import Camera from './Camera'
@@ -29,6 +30,7 @@ export default class Scene {
     this.debug = new Debugger()
     this.sizes = new Sizes()
     this.colors = new Colors()
+    this.mousePosition = new MousePosition()
     this.time = new Time()
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)

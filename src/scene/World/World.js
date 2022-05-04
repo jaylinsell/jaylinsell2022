@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Experience from '@/scene'
 import Floor from './Floor'
 import Head from './Head'
+import Eye from './Eye'
 
 export default class World {
   constructor () {

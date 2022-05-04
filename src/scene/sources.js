@@ -189,5 +189,40 @@ export default [
     type: 'texture',
     path: 'matcaps/CEB299_6B5C4C_887564_746355-128px.png'
   },
+  {
+    name: 'matCap37',
+    type: 'texture',
+    path: 'matcaps/050505_747474_4C4C4C_333333-128px.png'
+  },
+  {
+    name: 'matCap38',
+    type: 'texture',
+    path: 'matcaps/070B0C_B2C7CE_728FA3_5B748B-128px.png'
+  },
+  {
+    name: 'matCap39',
+    type: 'texture',
+    path: 'matcaps/0A0A0A_A9A9A9_525252_747474-128px.png'
+  },
+  {
+    name: 'matCap40',
+    type: 'texture',
+    path: 'matcaps/0F0F0F_4B4B4B_1C1C1C_2C2C2C-128px.png'
+  },
+  {
+    name: 'matCap41',
+    type: 'texture',
+    path: 'matcaps/15100F_241D1B_292424_2C2C27-128px.png'
+  },
+  {
+    name: 'matCap42',
+    type: 'texture',
+    path: 'matcaps/17395A_7EBCC7_4D8B9F_65A1B5-128px.png'
+  },
+  {
+    name: 'matCap43',
+    type: 'texture',
+    path: 'matcaps/1A2461_3D70DB_2C3C8F_2C6CAC-128px.png'
+  },
 ]
 

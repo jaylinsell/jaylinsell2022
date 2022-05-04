@@ -9,7 +9,7 @@ export default class Logo {
     this.resources = this.experience.resources.items
     this.logoTexture = this.resources.logo
 
-    this.debug = this.experience.debug.ui
+    this.debug = this.experience.debug
 
     this.setLogo()
   }

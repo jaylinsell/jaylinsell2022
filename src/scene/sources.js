@@ -5,6 +5,11 @@ export default [
     path: 'models/shrunkenHead.glb'
   },
   {
+    name: 'logo',
+    type: 'texture',
+    path: 'svgs/logo.svg'
+  },
+  {
     name: 'matCap0',
     type: 'texture',
     path: 'matcaps/2A6276_041218_739BA6_042941-128px.png'

@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import Experience from '@/scene'
 
 export default class Floor {
-  constructor (_options) {
+  constructor () {
     this.experience = new Experience()
     this.scene = this.experience.scene
 
@@ -17,7 +17,7 @@ export default class Floor {
   }
 
   setMaterial () {
-    this.material = new THREE.MeshStandardMaterial({ color: this.experience.colors.backgroundLight })
+    this.material = new THREE.MeshStandardMaterial({ color: this.experience.colors.backgroundDark })
   }
 
   setMesh () {

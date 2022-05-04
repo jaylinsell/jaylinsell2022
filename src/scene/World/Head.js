@@ -102,37 +102,37 @@ export default class Head {
 
   setDebug () {
     if (this.debug) {
-      const debugFolder = this.debug.ui.addFolder('Head')
-      const matcapFolder = debugFolder.addFolder('matcaps')
-      const expressionsFolder = debugFolder.addFolder('expressions')
+      // const debugFolder = this.debug.ui.addFolder('Head')
+      // const matcapFolder = debugFolder.addFolder('matcaps')
+      // const expressionsFolder = debugFolder.addFolder('expressions')
 
-      // matCaps
-      matcapFolder.close() // close folder by default
-      const matcapResources = [...new Array(44)].map((cap, ind) => `matCap${ind}`)
+      // // matCaps
+      // matcapFolder.close() // close folder by default
+      // const matcapResources = [...new Array(44)].map((cap, ind) => `matCap${ind}`)
 
-      // For each item type modelled, we want to add a matcap selector and update the corresponding values in the ui
-      Object.keys(this.matCapReferences).forEach(key => {
-        matcapFolder.add(this.matCaps, this.matCapReferences[key], matcapResources)
-        .onChange(() => {
-          this.model.traverse(child => {
-            if (child.name.includes(key)) {
-              const correspondingMatcap = this.matCaps[ this.matCapReferences[key] ]
+      // // For each item type modelled, we want to add a matcap selector and update the corresponding values in the ui
+      // Object.keys(this.matCapReferences).forEach(key => {
+      //   matcapFolder.add(this.matCaps, this.matCapReferences[key], matcapResources)
+      //   .onChange(() => {
+      //     this.model.traverse(child => {
+      //       if (child.name.includes(key)) {
+      //         const correspondingMatcap = this.matCaps[ this.matCapReferences[key] ]
 
-              child.material.matcap = this.resources.items[ correspondingMatcap ]
-              child.material.needsUpdate = true
-            }
-          })
-        })
-      })
+      //         child.material.matcap = this.resources.items[ correspondingMatcap ]
+      //         child.material.needsUpdate = true
+      //       }
+      //     })
+      //   })
+      // })
 
-      // Add morph targets / facial expressions
-      Object.keys(this.headMesh.morphTargetDictionary).forEach(key => {
-        expressionsFolder
-          .add(this.headMesh.morphTargetInfluences, this.headMesh.morphTargetDictionary[key])
-          .min(0)
-          .max(1)
-          .name(key)
-      })
+      // // Add morph targets / facial expressions
+      // Object.keys(this.headMesh.morphTargetDictionary).forEach(key => {
+      //   expressionsFolder
+      //     .add(this.headMesh.morphTargetInfluences, this.headMesh.morphTargetDictionary[key])
+      //     .min(0)
+      //     .max(1)
+      //     .name(key)
+      // })
 
     }
   } // end debug

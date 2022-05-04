@@ -28,13 +28,13 @@ export default class Logo {
     this.logoMesh.position.set(-1.5, 0.1, -2)
     this.logoMesh.rotation.y = 0.25
 
-    this.debug.add(this.logoMesh.position, 'x').min(-2).max(2).step(0.01)
-    this.debug.add(this.logoMesh.position, 'y').min(-2).max(2).step(0.01)
-    this.debug.add(this.logoMesh.position, 'z').min(-2).max(2).step(0.01)
+    // this.debug.add(this.logoMesh.position, 'x').min(-2).max(2).step(0.01)
+    // this.debug.add(this.logoMesh.position, 'y').min(-2).max(2).step(0.01)
+    // this.debug.add(this.logoMesh.position, 'z').min(-2).max(2).step(0.01)
 
-    this.debug.add(options, 'scale').min(0).max(20).step(0.01).onChange(() => this.logoMesh.scale.set(options.scale, options.scale, options.scale))
+    // this.debug.add(options, 'scale').min(0).max(20).step(0.01).onChange(() => this.logoMesh.scale.set(options.scale, options.scale, options.scale))
 
-    this.debug.add(this.logoMesh.rotation, 'y').min(-2).max(2).step(0.01).name('rotation')
+    // this.debug.add(this.logoMesh.rotation, 'y').min(-2).max(2).step(0.01).name('rotation')
 
 
     this.scene.add(this.logoMesh)

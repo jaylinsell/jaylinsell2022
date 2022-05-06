@@ -6,7 +6,7 @@ export default [
   },
   {
     name: 'logo',
-    type: 'texture',
+    type: 'svg',
     path: 'svgs/logo.svg'
   },
   {

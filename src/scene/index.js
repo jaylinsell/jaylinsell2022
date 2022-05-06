@@ -30,13 +30,13 @@ export default class Scene {
     this.debug = new Debugger()
     this.sizes = new Sizes()
     this.colors = new Colors()
-    this.mousePosition = new MousePosition()
     this.time = new Time()
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
     this.camera = new Camera()
     this.renderer = new Renderer()
     this.world = new World()
+    this.mousePosition = new MousePosition()
 
     // sizes resize event
     this.sizes.on('resize', () => {

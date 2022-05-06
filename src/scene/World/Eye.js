@@ -9,6 +9,8 @@ export default class Eye {
     this.head = new Head()
     this.headModel = this.head.headModel
     this.resources = this.experience.resources
+    this.camera = this.experience.camera.instance
+    this.scene = this.experience.scene
     this.time = this.experience.time
     this.debug = this.experience.debug
     this.mousePosition = this.experience.mousePosition
@@ -18,39 +20,10 @@ export default class Eye {
 
     this.setEye()
     this.setPupil()
+    this.setEyeMovement()
     this.setDebug()
   }
 
-  setEye () {
-    // Set the object
-    this.eyeGeometry = new THREE.SphereGeometry(1, 24, 24)
-    this.eyeMaterial = new THREE.MeshMatcapMaterial({ matcap: this.resources.items.matCap34 })
-    this.eyeMesh = new THREE.Mesh(this.eyeGeometry, this.eyeMaterial)
-    this.eyeMesh.scale.set(0.325, 0.325, 0.325)
-
-    this.eyeModel.add(this.eyeMesh)
-
-    // animate the eye
-    const previousPosition = {
-      x: 0,
-      y: 0
-    }
-
-    this.time.on('tick', () => {
-      const { x, y } = this.mousePosition
-      const positionHasChanged = previousPosition.x !== x || previousPosition.y !== y
-
-      if (positionHasChanged) {
-        // Reduce the distance the eye  moves for added realism
-        this.eyeModel.rotation.x = -Math.atan((y + this.eyeModel.position.y) / 1.25)
-        this.eyeModel.rotation.y = Math.atan((x + this.eyeModel.position.x) / 1.25)
-
-       // updated the previous position with the current ones
-        previousPosition.x = x
-        previousPosition.y = y
-      }
-    })
-  }
 
   setPupil () {
     this.pupilGeometry = new THREE.SphereGeometry(0.08, 8, 8)
@@ -63,15 +36,49 @@ export default class Eye {
     this.eyeModel.add(this.pupilMesh)
   }
 
+  setEye () {
+    // Set the object
+    this.eyeGeometry = new THREE.SphereGeometry(1, 24, 24)
+    this.eyeMaterial = new THREE.MeshMatcapMaterial({ matcap: this.resources.items.matCap34 })
+    this.eyeMesh = new THREE.Mesh(this.eyeGeometry, this.eyeMaterial)
+    this.eyeMesh.scale.set(0.325, 0.325, 0.325)
+
+    this.eyeModel.add(this.eyeMesh)
+  }
+
   setIris () {
     // Unsure if adding Iris yet...
   }
 
+  setEyeMovement () {
+    // animate the eye
+    const previousPosition = {
+      x: 0,
+      y: 0
+    }
+
+    this.mousePosition.on('mouseMove', () => {
+      let { x, y, z } = this.mousePosition.position3D
+      // const { distance } = this.mousePosition.intersect
+      const positionHasChanged = previousPosition.x !== x || previousPosition.y !== y
+
+      // TODO - curve eye on a curved graph based on distance
+
+      if (positionHasChanged) {
+        this.eyeModel.lookAt(x, y, z)
+
+        previousPosition.x = x
+        previousPosition.y = y
+      }
+    })
+  }
+
   setDebug () {
     if (this.debug) {
-      // no debuggers yet...
-      // const debugFolder = this.debug.ui.addFolder('Eye')
-
+      const debugFolder = this.debug.ui.addFolder('Eye')
+      debugFolder.add(this.eyeModel.rotation, 'x').min(-Math.PI).max(Math.PI)
+      debugFolder.add(this.eyeModel.rotation, 'y').min(-Math.PI).max(Math.PI)
+      debugFolder.add(this.eyeModel.rotation, 'z').min(-Math.PI).max(Math.PI)
     }
   }
 }

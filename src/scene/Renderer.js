@@ -42,9 +42,9 @@ export default class Renderer {
 
   setDebug () {
     if (this.debug) {
-      // const sceneFolder = this.debug.addFolder('Scene')
-      // sceneFolder.addColor(this.experience.colors, 'backgroundDark')
-      //   .onChange(() => this.instance.setClearColor(this.experience.colors.backgroundDark))
+      const sceneFolder = this.debug.ui.addFolder('Scene')
+      sceneFolder.addColor(this.experience.colors, 'backgroundDark')
+        .onChange(() => this.instance.setClearColor(this.experience.colors.backgroundDark))
     }
   }
 }

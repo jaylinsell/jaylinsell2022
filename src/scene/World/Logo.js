@@ -49,11 +49,13 @@ export default class Logo {
 
   setDebug () {
     // Add debuggers
-    this.logoFolder.add(this.logoMesh.position, 'x').min(-10).max(10).step(0.01)
-    this.logoFolder.add(this.logoMesh.position, 'y').min(-10).max(10).step(0.01)
-    this.logoFolder.add(this.logoMesh.position, 'z').min(-10).max(10).step(0.01)
-    this.logoFolder.add(this.options, 'scale').min(-1).max(1).step(0.01).onChange(() => this.logoMesh.scale.set(this.options.scale, this.options.scale, this.options.scale))
-    this.logoFolder.add(this.logoMesh.rotation, 'y').min(-Math.PI).max(Math.PI).step(0.01).name('rotate Y')
-    this.logoFolder.add(this.logoMesh.rotation, 'x').min(-Math.PI).max(Math.PI).step(0.01).name('rotate X')
+    if (this.debug.active) {
+      this.logoFolder.add(this.logoMesh.position, 'x').min(-10).max(10).step(0.01)
+      this.logoFolder.add(this.logoMesh.position, 'y').min(-10).max(10).step(0.01)
+      this.logoFolder.add(this.logoMesh.position, 'z').min(-10).max(10).step(0.01)
+      this.logoFolder.add(this.options, 'scale').min(-1).max(1).step(0.01).onChange(() => this.logoMesh.scale.set(this.options.scale, this.options.scale, this.options.scale))
+      this.logoFolder.add(this.logoMesh.rotation, 'y').min(-Math.PI).max(Math.PI).step(0.01).name('rotate Y')
+      this.logoFolder.add(this.logoMesh.rotation, 'x').min(-Math.PI).max(Math.PI).step(0.01).name('rotate X')
+    }
   }
 }

@@ -4,11 +4,15 @@ import Experience from '@/scene'
 export default class Renderer {
   constructor () {
     this.experience = new Experience()
-    this.debug = this.experience.debug.ui
+    this.debug = this.experience.debug
     this.sizes = this.experience.sizes
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
     this.camera = this.experience.camera
+
+    if (this.debug.active) {
+      this.sceneFolder = this.debug.ui.addFolder('Scene')
+    }
 
     this.setInstance()
     this.setDebug()
@@ -42,8 +46,8 @@ export default class Renderer {
 
   setDebug () {
     if (this.debug.active) {
-      const sceneFolder = this.debug.ui.addFolder('Scene')
-      sceneFolder.addColor(this.experience.colors, 'backgroundDark')
+      this.sceneFolder
+        .addColor(this.experience.colors, 'backgroundDark')
         .onChange(() => this.instance.setClearColor(this.experience.colors.backgroundDark))
     }
   }

@@ -18,6 +18,10 @@ export default class Eye {
     this.eyeModel = new THREE.Object3D()
     this.eyeModel.position.set(-0.42, 0, 0.8)
 
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder('Eye')
+    }
+
     this.setEye()
     this.setPupil()
     this.setEyeMovement()
@@ -75,10 +79,9 @@ export default class Eye {
 
   setDebug () {
     if (this.debug.active) {
-      const debugFolder = this.debug.ui.addFolder('Eye')
-      debugFolder.add(this.eyeModel.rotation, 'x').min(-Math.PI).max(Math.PI)
-      debugFolder.add(this.eyeModel.rotation, 'y').min(-Math.PI).max(Math.PI)
-      debugFolder.add(this.eyeModel.rotation, 'z').min(-Math.PI).max(Math.PI)
+      this.debugFolder.add(this.eyeModel.rotation, 'x').min(-Math.PI).max(Math.PI)
+      this.debugFolder.add(this.eyeModel.rotation, 'y').min(-Math.PI).max(Math.PI)
+      this.debugFolder.add(this.eyeModel.rotation, 'z').min(-Math.PI).max(Math.PI)
     }
   }
 }

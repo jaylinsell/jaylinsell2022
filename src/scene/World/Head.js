@@ -101,7 +101,7 @@ export default class Head {
   }
 
   setDebug () {
-    if (this.debug) {
+    if (this.debug.active) {
       const debugFolder = this.debug.ui.addFolder('Head')
       const matcapFolder = debugFolder.addFolder('matcaps')
       const expressionsFolder = debugFolder.addFolder('expressions')

@@ -74,7 +74,7 @@ export default class Eye {
   }
 
   setDebug () {
-    if (this.debug) {
+    if (this.debug.active) {
       const debugFolder = this.debug.ui.addFolder('Eye')
       debugFolder.add(this.eyeModel.rotation, 'x').min(-Math.PI).max(Math.PI)
       debugFolder.add(this.eyeModel.rotation, 'y').min(-Math.PI).max(Math.PI)

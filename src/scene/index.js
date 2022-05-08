@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Debugger from './utils/Debugger'
+import Debug from './utils/Debugger'
 import Sizes from './utils/Sizes'
 import Time from './utils/Time'
 import MousePosition from './utils/MousePosition'
@@ -27,7 +27,7 @@ export default class Scene {
      * Options
      */
     this.canvas = canvas
-    this.debug = new Debugger()
+    this.debug = new Debug()
     this.sizes = new Sizes()
     this.colors = new Colors()
     this.time = new Time()

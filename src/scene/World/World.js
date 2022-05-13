@@ -13,8 +13,8 @@ export default class World {
 
     this.debug = this.experience.debug
 
-    // this.floor = new Floor()
-    // this.floor.receiveShadow = true
+    this.floor = new Floor()
+    this.floor.receiveShadow = true
 
     // wait for the resources
     this.resources.on('ready', () => {

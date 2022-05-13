@@ -9,6 +9,7 @@ import Camera from './Camera'
 import Lights from './Lights'
 import Renderer from './Renderer'
 import World from './World/World'
+import Physics from './World/Physics'
 import sources from './sources'
 
 let instance = null
@@ -38,6 +39,7 @@ export default class Scene {
     this.lights = new Lights()
     this.renderer = new Renderer()
     this.world = new World()
+    this.physics = new Physics()
     this.mousePosition = new MousePosition()
 
     // sizes resize event
@@ -60,6 +62,7 @@ export default class Scene {
     this.camera.update()
     this.mousePosition.update()
     this.world.update()
+    this.physics.update()
     this.renderer.update()
   }
 }

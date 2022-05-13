@@ -16,10 +16,11 @@ export default class MousePosition extends EventEmitter{
     this.position3D = new THREE.Vector3()
     this.intersect = null
 
+    this.raycaster = new THREE.Raycaster()
+
     window.addEventListener('mousemove', e => this.set2dMousePosition(e))
 
     this.setRaycasterTarget()
-    this.setRaycaster()
   }
 
   set2dMousePosition ({ x, y }) {
@@ -41,20 +42,16 @@ export default class MousePosition extends EventEmitter{
     this.camera.add(this.targetMesh)
   }
 
-  setRaycaster() {
-    this.raycaster = new THREE.Raycaster()
+  update () {
+    this.raycaster.setFromCamera(this.pointer, this.camera)
 
-    this.time.on('tick', () => {
-      this.raycaster.setFromCamera(this.pointer, this.camera)
+    const intersect = this.raycaster.intersectObject(this.targetMesh)
 
-      const intersect = this.raycaster.intersectObject(this.targetMesh)
-
-      if (intersect.length > 0) {
-        this.intersect = intersect[0]
-        this.position3D = intersect[0].point
-        this.trigger('mouseMove')
-      }
-    })
+    if (intersect.length > 0) {
+      this.intersect = intersect[0]
+      this.position3D = intersect[0].point
+      this.trigger('mouseMove')
+    }
   }
 
   destroyListener () {

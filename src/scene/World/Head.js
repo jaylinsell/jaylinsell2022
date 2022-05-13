@@ -40,7 +40,7 @@ export default class Head {
   }
 
   setTextures () {
-    this.matCaps.headMatCap = 'matCap25'
+    // this.matCaps.headMatCap = 'headTexture'
     this.matCaps.stringMatCap = 'matCap27'
     this.matCaps.boneMatCap = 'matCap30'
     this.matCaps.eyeMatCap = 'matCap34'
@@ -51,6 +51,7 @@ export default class Head {
     this.matCapReferences = {
       head: 'headMatCap',
       stitch: 'stringMatCap',
+      string: 'stringMatCap',
       bone: 'boneMatCap',
       eye: 'eyeMatCap',
       hair: 'hairMatCap',
@@ -80,8 +81,8 @@ export default class Head {
         const correspondingMatcap = this.matCaps[this.matCapReferences[key]]
 
         if (child.name.includes(key)) {
-          child.material = new THREE.MeshMatcapMaterial({ matcap: this.resources.items[correspondingMatcap]})
-          child.material.needsUpdate = true
+          // child.material = new THREE.MeshMatcapMaterial({ matcap: this.resources.items[correspondingMatcap]})
+          // child.material.needsUpdate = true
 
           // TODO Validate the performance of this. Might bake the textures and mock the shadows instead
           child.castShadow = true
@@ -114,22 +115,22 @@ export default class Head {
   setDebug () {
     if (this.debug.active) {
       // matCaps
-      const matcapResources = [...new Array(44)].map((cap, ind) => `matCap${ind}`)
+      // const matcapResources = [...new Array(44)].map((cap, ind) => `matCap${ind}`)
 
       // For each item type modelled, we want to add a matcap selector and update the corresponding values in the ui
-      Object.keys(this.matCapReferences).forEach(key => {
-        this.matcapFolder.add(this.matCaps, this.matCapReferences[key], matcapResources)
-        .onChange(() => {
-          this.model.traverse(child => {
-            if (child.name.includes(key)) {
-              const correspondingMatcap = this.matCaps[ this.matCapReferences[key] ]
+      // Object.keys(this.matCapReferences).forEach(key => {
+      //   this.matcapFolder.add(this.matCaps, this.matCapReferences[key], matcapResources)
+      //   .onChange(() => {
+      //     this.model.traverse(child => {
+      //       if (child.name.includes(key)) {
+      //         const correspondingMatcap = this.matCaps[ this.matCapReferences[key] ]
 
-              child.material.matcap = this.resources.items[ correspondingMatcap ]
-              child.material.needsUpdate = true
-            }
-          })
-        })
-      })
+      //         child.material.matcap = this.resources.items[ correspondingMatcap ]
+      //         child.material.needsUpdate = true
+      //       }
+      //     })
+      //   })
+      // })
 
       // Add morph targets / facial expressions
       Object.keys(this.headMesh.morphTargetDictionary).forEach(key => {

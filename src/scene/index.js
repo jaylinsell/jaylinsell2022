@@ -6,6 +6,7 @@ import MousePosition from './utils/MousePosition'
 import Colors from './utils/Colors'
 import Resources from './utils/Resources'
 import Camera from './Camera'
+import Lights from './Lights'
 import Renderer from './Renderer'
 import World from './World/World'
 import sources from './sources'
@@ -34,6 +35,7 @@ export default class Scene {
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
     this.camera = new Camera()
+    this.lights = new Lights()
     this.renderer = new Renderer()
     this.world = new World()
     this.mousePosition = new MousePosition()
@@ -47,15 +49,6 @@ export default class Scene {
     this.time.on('tick', () => {
       this.update()
     })
-
-    this.light = new THREE.DirectionalLight("#ffffff", 1)
-    this.light.position.set(10, 10, 10)
-    this.light.castShadow = true
-
-    this.light.shadow.camera.far = 30
-
-    this.scene.add(this.light)
-    this.scene.add(this.light.target)
   }
 
   resize () {
@@ -65,6 +58,7 @@ export default class Scene {
 
   update () {
     this.camera.update()
+    this.mousePosition.update()
     this.world.update()
     this.renderer.update()
   }

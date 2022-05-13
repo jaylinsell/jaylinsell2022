@@ -11,6 +11,8 @@ export default class World {
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 
+    this.debug = this.experience.debug
+
     // this.floor = new Floor()
     // this.floor.receiveShadow = true
 

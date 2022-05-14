@@ -30,7 +30,7 @@ export default class MousePosition extends EventEmitter{
   }
 
   setRaycasterTarget() {
-    const distance = 4
+    const distance = 2.2
     this.targetGeometry = new THREE.PlaneGeometry()
     this.targetMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
     this.targetMesh = new THREE.Mesh(this.targetGeometry, this.targetMaterial)

@@ -25,9 +25,9 @@ export default class Head {
       this.debugFolder = this.debug.ui.addFolder('Head')
       this.matcapFolder = this.debugFolder.addFolder('matcaps')
       this.expressionsFolder = this.debugFolder.addFolder('expressions')
-      this.expressionsFolder = this.debugFolder.addFolder('expressions')
 
       // close folders by default
+      this.debugFolder.close()
       this.matcapFolder.close()
       this.expressionsFolder.close()
     }
@@ -62,7 +62,7 @@ export default class Head {
 
   setModel () {
     // Set the head model group
-    this.headModel.position.x = 2
+    this.headModel.position.x = 1
     this.headModel.rotation.y = -Math.PI * 0.05
     this.headModel.castShadow = true
     this.scene.add(this.headModel)
@@ -93,11 +93,6 @@ export default class Head {
     })
 
     this.headModel.add(this.model)
-
-    const testGeometry = new THREE.BoxGeometry(1, 1, 1)
-    const testMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-    const testSphere = new THREE.Mesh(testGeometry, testMaterial)
-    this.scene.add(testSphere)
   }
 
   setEye () {

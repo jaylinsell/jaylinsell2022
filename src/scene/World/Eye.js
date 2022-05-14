@@ -20,6 +20,7 @@ export default class Eye {
 
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder('Eye')
+      this.debugFolder.close()
     }
 
     this.setEye()
@@ -79,12 +80,9 @@ export default class Eye {
 
   setDebug () {
     if (this.debug.active) {
-      this.debugFolder.add(this.eyeModel.rotation, 'x').min(-Math.PI).max(Math.PI)
-      this.debugFolder.add(this.eyeModel.rotation, 'y').min(-Math.PI).max(Math.PI)
-      this.debugFolder.add(this.eyeModel.rotation, 'z').min(-Math.PI).max(Math.PI)
-      this.debugFolder.add(this.eyeModel.position, 'x').min(-1).max(1)
-      this.debugFolder.add(this.eyeModel.position, 'y').min(-1).max(1)
-      this.debugFolder.add(this.eyeModel.position, 'z').min(-1).max(1)
+      this.debugFolder.add(this.eyeModel.rotation, 'x').min(-Math.PI).max(Math.PI).name('rotateX')
+      this.debugFolder.add(this.eyeModel.rotation, 'y').min(-Math.PI).max(Math.PI).name('rotateY')
+      this.debugFolder.add(this.eyeModel.rotation, 'z').min(-Math.PI).max(Math.PI).name('rotateZ')
     }
   }
 }

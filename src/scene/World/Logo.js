@@ -13,6 +13,7 @@ export default class Logo {
 
     if (this.debug.active) {
       this.logoFolder = this.debug.ui.addFolder('Logo')
+      this.logoFolder.close()
     }
 
 
@@ -27,8 +28,8 @@ export default class Logo {
 
     // Set the options as an object so we can utilise gui debugger
     this.options = {}
-    this.options.scale = 0.005
-    this.options.positionX = -1.1
+    this.options.scale = 0.0035
+    this.options.positionX = -2.27
     this.options.rotateX = Math.PI
     this.options.rotateY = Math.PI * 1.85
 

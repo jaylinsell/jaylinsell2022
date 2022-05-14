@@ -45,7 +45,7 @@ export default class Physics {
       this.headMaterial,
       {
         friction: 0.1,
-        restitution: 0.6,
+        restitution: 0.4,
       }
     )
 
@@ -67,15 +67,31 @@ export default class Physics {
   }
 
   setHeadShape () {
-    // Set up a physics object in the closest shape of the head
-    this.headShape = new CANNON.Sphere(0.5)
-    this.headBody = new CANNON.Body({
-      mass: 1,
-      position: new CANNON.Vec3(2, 3, 0),
-      shape: this.headShape,
-    })
-    console.log(this.headBody)
+    /**
+     * The simplest and most performant way of creating a relative shape to the head is by creating
+     * compound shapes - where I creeate smaller shapes and position them accoridng to the head, rather than
+     * trying to do trimesh or convex shapes.
+     */
 
+    // Set Shapes
+    this.baseSkullShape = new CANNON.Sphere(0.55)
+    this.chinShape = new CANNON.Sphere(0.33)
+    this.eyeShape = new CANNON.Box(new CANNON.Vec3(0.45, 0.35, 0.1))
+
+    // Actual body/group
+    this.headBody = new CANNON.Body({
+      mass: 5,
+      position: new CANNON.Vec3(...this.head.position),
+    })
+
+    // Apply shapes
+    this.headBody.addShape(this.baseSkullShape)
+    this.headBody.addShape(this.chinShape, new CANNON.Vec3(-0.05, -0.45, 0.25))
+    this.headBody.addShape(this.eyeShape, new CANNON.Vec3(-0.05, -0.1, 0.4))
+
+    console.log(this.headBody.shapes)
+
+    // Physics Material
     this.headBody.material = this.headMaterial
 
     this.world.addBody(this.headBody)
@@ -86,6 +102,7 @@ export default class Physics {
 
     if (this.ready) {
       this.head.position.copy(this.headBody.position)
+      this.head.quaternion.copy(this.headBody.quaternion)
 
       if (this.debug.active) this.cannonDebugger.update()
     }

@@ -11,7 +11,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "cannon": "^0.6.2",
+    "cannon-es": "^0.19.0",
+    "cannon-es-debugger": "^1.0.0",
     "lil-gui": "^0.16.1",
     "pinia": "^2.0.13",
     "three": "^0.139.2",

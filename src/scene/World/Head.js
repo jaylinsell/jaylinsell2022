@@ -70,6 +70,7 @@ export default class Head {
     // set the blender model
     this.model = this.resource.scene
     this.model.rotation.y = Math.PI
+    this.model.scale.set(0.5, 0.5, 0.5)
 
     // store the actual child instance of the 'head' item from blender so we can update morph targets
     this.headMesh = this.model.getObjectByName('head')
@@ -92,6 +93,11 @@ export default class Head {
     })
 
     this.headModel.add(this.model)
+
+    const testGeometry = new THREE.BoxGeometry(1, 1, 1)
+    const testMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+    const testSphere = new THREE.Mesh(testGeometry, testMaterial)
+    this.scene.add(testSphere)
   }
 
   setEye () {

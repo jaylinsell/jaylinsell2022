@@ -8,7 +8,8 @@ specifiers:
   '@vue/eslint-config-typescript': ^10.0.0
   '@vue/test-utils': ^2.0.0-rc.20
   '@vue/tsconfig': ^0.1.3
-  cannon: ^0.6.2
+  cannon-es: ^0.19.0
+  cannon-es-debugger: ^1.0.0
   eslint: ^8.5.0
   eslint-plugin-vue: ^8.2.0
   jsdom: ^19.0.0
@@ -23,7 +24,8 @@ specifiers:
   vue-tsc: ^0.34.7
 
 dependencies:
-  cannon: 0.6.2
+  cannon-es: 0.19.0
+  cannon-es-debugger: 1.0.0_a7e9bd2b022a78e61974fb700d78a242
   lil-gui: 0.16.1
   pinia: 2.0.14_typescript@4.6.4+vue@3.2.33
   three: 0.139.2
@@ -546,8 +548,23 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /cannon/0.6.2:
-    resolution: {integrity: sha1-HnvHLdWEGYLzwQTCvFeL+k+xxXI=}
+  /cannon-es-debugger/1.0.0_a7e9bd2b022a78e61974fb700d78a242:
+    resolution: {integrity: sha512-sE9lDOBAYFKlh+0w+cvWKwUhJef8HYnUSVPWPL0jD15MAuVRQKno4QYZSGxgOoJkMR3mQqxL4bxys2b3RSWH8g==}
+    peerDependencies:
+      cannon-es: 0.x
+      three: 0.x
+      typescript: '>=3.8'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      cannon-es: 0.19.0
+      three: 0.139.2
+      typescript: 4.6.4
+    dev: false
+
+  /cannon-es/0.19.0:
+    resolution: {integrity: sha512-fu9UXrjFmAQXq3JyBVPbtyc53suX+QHzikZEJykxroVNnIx1xHq0jZenK8qwhdwbBAtDL9n/47TyPELuSQwZuA==}
     dev: false
 
   /chai/4.3.6:

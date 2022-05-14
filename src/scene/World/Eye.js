@@ -16,7 +16,7 @@ export default class Eye {
     this.mousePosition = this.experience.mousePosition
 
     this.eyeModel = new THREE.Object3D()
-    this.eyeModel.position.set(-0.42, 0, 0.8)
+    this.eyeModel.position.set(-0.2, 0, 0.39)
 
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder('Eye')
@@ -30,12 +30,12 @@ export default class Eye {
 
 
   setPupil () {
-    this.pupilGeometry = new THREE.SphereGeometry(0.08, 8, 8)
+    this.pupilGeometry = new THREE.SphereGeometry(0.04, 8, 8)
     this.pupilMaterial = new THREE.MeshBasicMaterial({ color: '#000000' })
     this.pupilMesh = new THREE.Mesh(this.pupilGeometry, this.pupilMaterial)
 
-    this.pupilMesh.scale.z = 0.4
-    this.pupilMesh.position.z = 0.31
+    this.pupilMesh.scale.z = 0.2
+    this.pupilMesh.position.z = 0.16
 
     this.eyeModel.add(this.pupilMesh)
   }
@@ -45,7 +45,7 @@ export default class Eye {
     this.eyeGeometry = new THREE.SphereGeometry(1, 24, 24)
     this.eyeMaterial = new THREE.MeshMatcapMaterial({ matcap: this.resources.items.matCap34 })
     this.eyeMesh = new THREE.Mesh(this.eyeGeometry, this.eyeMaterial)
-    this.eyeMesh.scale.set(0.325, 0.325, 0.325)
+    this.eyeMesh.scale.set(0.16, 0.16, 0.16)
 
     this.eyeModel.add(this.eyeMesh)
   }
@@ -82,6 +82,9 @@ export default class Eye {
       this.debugFolder.add(this.eyeModel.rotation, 'x').min(-Math.PI).max(Math.PI)
       this.debugFolder.add(this.eyeModel.rotation, 'y').min(-Math.PI).max(Math.PI)
       this.debugFolder.add(this.eyeModel.rotation, 'z').min(-Math.PI).max(Math.PI)
+      this.debugFolder.add(this.eyeModel.position, 'x').min(-1).max(1)
+      this.debugFolder.add(this.eyeModel.position, 'y').min(-1).max(1)
+      this.debugFolder.add(this.eyeModel.position, 'z').min(-1).max(1)
     }
   }
 }

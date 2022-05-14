@@ -1,16 +1,27 @@
-import CANNON from 'cannon'
+import * as THREE from 'three'
+import * as CANNON from 'cannon-es'
+import CannonDebugger from 'cannon-es-debugger'
 import Experience from '@/scene'
 
 export default class Physics {
   constructor () {
     this.experience = new Experience()
+    this.scene = this.experience.scene
     this.time = this.experience.time
     this.resources = this.experience.resources
 
     this.world = new CANNON.World()
-    this.world.gravity.set(0, -2, 0) // -9.82 being equal to earth gravity
+    this.world.gravity.set(0, -9.82, 0) // -9.82 being equal to earth gravity
 
     this.ready = false
+
+    // Debuggers
+    this.debug = this.experience.debug
+
+    if (this.debug.active) {
+      this.cannonDebugger = new CannonDebugger(this.scene, this.world, { color: '#03bbff' })
+      this.debugFolder = this.debug.ui.addFolder('Physics')
+    }
 
     // get models once loaded
     this.resources.on('ready', () => {
@@ -29,10 +40,14 @@ export default class Physics {
     this.concreteMaterial = new CANNON.Material('concrete')
     this.headMaterial = new CANNON.Material('head')
 
-    const concreteHeadContactMaterial = new CANNON.ContactMaterial(this.concreteMaterial, this.headMaterial, {
-      friction: 0.1,
-      restitution: 0.6,
-    })
+    const concreteHeadContactMaterial = new CANNON.ContactMaterial(
+      this.concreteMaterial,
+      this.headMaterial,
+      {
+        friction: 0.1,
+        restitution: 0.6,
+      }
+    )
 
     this.world.addContactMaterial(concreteHeadContactMaterial)
   }
@@ -58,13 +73,12 @@ export default class Physics {
       mass: 1,
       position: new CANNON.Vec3(2, 3, 0),
       shape: this.headShape,
-      force: new CANNON.Vec3(1, 0, 0),
     })
     console.log(this.headBody)
 
     this.headBody.material = this.headMaterial
 
-    this.world.add(this.headBody)
+    this.world.addBody(this.headBody)
   }
 
   update () {
@@ -72,6 +86,8 @@ export default class Physics {
 
     if (this.ready) {
       this.head.position.copy(this.headBody.position)
+
+      if (this.debug.active) this.cannonDebugger.update()
     }
   }
 }

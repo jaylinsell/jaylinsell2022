@@ -23,12 +23,12 @@ export default class Head {
 
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder('Head')
-      this.matcapFolder = this.debugFolder.addFolder('matcaps')
+      // this.matcapFolder = this.debugFolder.addFolder('matcaps')
       this.expressionsFolder = this.debugFolder.addFolder('expressions')
 
       // close folders by default
       this.debugFolder.close()
-      this.matcapFolder.close()
+      // this.matcapFolder.close()
       this.expressionsFolder.close()
     }
 
@@ -69,7 +69,7 @@ export default class Head {
 
     // set the blender model
     this.model = this.resource.scene
-    this.model.rotation.y = Math.PI
+    this.model.rotation.y = Math.PI * 0.97
     this.model.scale.set(0.5, 0.5, 0.5)
 
     // store the actual child instance of the 'head' item from blender so we can update morph targets

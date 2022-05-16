@@ -184,11 +184,11 @@ export default [
   //   type: 'texture',
   //   path: 'matcaps/B09273_7A573D_C7AF97_84644C-128px.png'
   // },
-  // {
-  //   name: 'matCap34',
-  //   type: 'texture',
-  //   path: 'matcaps/BAADA8_ECE6E7_9A8378_E3DCD3-128px.png'
-  // },
+  {
+    name: 'matCap34',
+    type: 'texture',
+    path: 'matcaps/BAADA8_ECE6E7_9A8378_E3DCD3-128px.png'
+  },
   // {
   //   name: 'matCap35',
   //   type: 'texture',

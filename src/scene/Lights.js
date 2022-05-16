@@ -8,7 +8,7 @@ export default class Lights {
     this.debug = this.experience.debug
 
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder('Lights')
+      // this.debugFolder = this.debug.ui.addFolder('Lights')
     }
 
     this.setDirectionalLight()
@@ -58,22 +58,22 @@ export default class Lights {
   setDebug () {
     if (this.debug.active) {
       // directional lights
-      this.debugFolder.add(this.light, 'intensity').min(0).max(100).step(0.1).name('light intensity')
-      this.debugFolder.add(this.light.position, 'x').min(-50).max(50).step(0.1).name('lightX')
-      this.debugFolder.add(this.light.position, 'y').min(-50).max(50).step(0.1).name('lightY')
-      this.debugFolder.add(this.light.position, 'z').min(-50).max(50).step(0.1).name('lightZ')
+      // this.debugFolder.add(this.light, 'intensity').min(0).max(100).step(0.1).name('light intensity')
+      // this.debugFolder.add(this.light.position, 'x').min(-50).max(50).step(0.1).name('lightX')
+      // this.debugFolder.add(this.light.position, 'y').min(-50).max(50).step(0.1).name('lightY')
+      // this.debugFolder.add(this.light.position, 'z').min(-50).max(50).step(0.1).name('lightZ')
 
 
-      // point lights
-      this.debugFolder.add(this.blueLight, 'intensity').min(0).max(10).step(0.1).name('blue light intensity')
-      this.debugFolder.add(this.blueLight.position, 'x').min(-20).max(20).step(0.1).name('blueLightX')
-      this.debugFolder.add(this.blueLight.position, 'y').min(-20).max(20).step(0.1).name('blueLightY')
-      this.debugFolder.add(this.blueLight.position, 'z').min(-20).max(20).step(0.1).name('blueLightZ')
+      // // point lights
+      // this.debugFolder.add(this.blueLight, 'intensity').min(0).max(10).step(0.1).name('blue light intensity')
+      // this.debugFolder.add(this.blueLight.position, 'x').min(-20).max(20).step(0.1).name('blueLightX')
+      // this.debugFolder.add(this.blueLight.position, 'y').min(-20).max(20).step(0.1).name('blueLightY')
+      // this.debugFolder.add(this.blueLight.position, 'z').min(-20).max(20).step(0.1).name('blueLightZ')
 
-      this.debugFolder.add(this.purpleLight, 'intensity').min(0).max(10).step(0.1).name('purple light intensity')
-      this.debugFolder.add(this.purpleLight.position, 'x').min(-20).max(20).step(0.1).name('purpleLightX')
-      this.debugFolder.add(this.purpleLight.position, 'y').min(-20).max(20).step(0.1).name('purpleLightY')
-      this.debugFolder.add(this.purpleLight.position, 'z').min(-20).max(20).step(0.1).name('purpleLightZ')
+      // this.debugFolder.add(this.purpleLight, 'intensity').min(0).max(10).step(0.1).name('purple light intensity')
+      // this.debugFolder.add(this.purpleLight.position, 'x').min(-20).max(20).step(0.1).name('purpleLightX')
+      // this.debugFolder.add(this.purpleLight.position, 'y').min(-20).max(20).step(0.1).name('purpleLightY')
+      // this.debugFolder.add(this.purpleLight.position, 'z').min(-20).max(20).step(0.1).name('purpleLightZ')
     }
   }
 }

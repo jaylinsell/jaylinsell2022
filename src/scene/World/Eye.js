@@ -16,7 +16,7 @@ export default class Eye {
     this.mousePosition = this.experience.mousePosition
 
     this.eyeModel = new THREE.Object3D()
-    this.eyeModel.position.set(-0.2, 0, 0.39)
+    this.eyeModel.position.set(-0.24, 0, 0.36)
 
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder('Eye')

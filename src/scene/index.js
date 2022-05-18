@@ -39,8 +39,8 @@ export default class Scene {
     this.lights = new Lights()
     this.renderer = new Renderer()
     this.world = new World()
-    this.physics = new Physics()
     this.mousePosition = new MousePosition()
+    this.physics = new Physics()
 
     // sizes resize event
     this.sizes.on('resize', () => {

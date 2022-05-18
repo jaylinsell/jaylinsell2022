@@ -5,11 +5,15 @@ import Experience from '@/scene'
 
 export default class Physics {
   constructor () {
+    // Setup
     this.experience = new Experience()
     this.scene = this.experience.scene
     this.time = this.experience.time
     this.resources = this.experience.resources
+    this.camera = this.experience.camera.instance
+    this.mousePosition = this.experience.mousePosition
 
+    // World
     this.world = new CANNON.World()
     this.world.broadphase = new CANNON.SAPBroadphase(this.world)
     // this.world.allowSleep = true
@@ -18,7 +22,7 @@ export default class Physics {
 
     this.ready = false
 
-    // Debuggers
+    // Debugger
     this.debug = this.experience.debug
 
     if (this.debug.active) {
@@ -40,10 +44,11 @@ export default class Physics {
         color: '#03bbff'
       })
       const toggle = this.debugFolder.add(obj, 'togglePhysicWireframes').name('Toggle Physics Wireframes')
-
     }
 
-    // get models once loaded
+    /**
+     * Load models & utilities when ready
+     */
     this.resources.on('ready', () => {
       this.head = this.experience.world.head.headModel
 
@@ -51,15 +56,18 @@ export default class Physics {
       this.setFloor()
       this.setHeadShape()
       this.setPointToPointConstraints()
+      this.setThongWeapon()
+      this.setCollisionListeners()
+      this.setDebug()
 
       this.ready = true
     })
-
-  }
+  } // end constructor
 
   setPhysicMaterials () {
     this.concreteMaterial = new CANNON.Material('concrete')
     this.headMaterial = new CANNON.Material('head')
+    this.rubberMaterial = new CANNON.Material('rubber')
 
     const concreteHeadContactMaterial = new CANNON.ContactMaterial(
       this.concreteMaterial,
@@ -67,6 +75,15 @@ export default class Physics {
       {
         friction: 0.1,
         restitution: 0.4,
+      }
+    )
+
+    const rubberHeadContactMaterial = new CANNON.ContactMaterial(
+      this.rubberMaterial,
+      this.headMaterial,
+      {
+        friction: 0.3,
+        restitution: 1,
       }
     )
 
@@ -110,20 +127,17 @@ export default class Physics {
       this.debugFolder.add(obj, 'createBall')
     }
 
-
-    // this.world.addBody(this.testBody)
-
-    // Shape setups
+    // Shape setups for cylinders (used around hair)
     this.cylinderRadius = 0.05
     this.cylinderRadiusBottom = 0.05
     this.cylinderHeight = 0.5
     this.cylinderNumSegements = 8
 
     // Set Shapes
-    this.baseSkullShape = new CANNON.Sphere(0.55)
-    this.chinShape = new CANNON.Sphere(0.33)
-    this.eyeShape = new CANNON.Box(new CANNON.Vec3(0.45, 0.35, 0.1))
-    this.hairShape = new CANNON.Cylinder(this.cylinderRadius, 0.5, this.cylinderHeight, this.cylinderNumSegements)
+    const baseSkullShape = new CANNON.Sphere(0.55)
+    const chinShape = new CANNON.Sphere(0.33)
+    const eyeShape = new CANNON.Box(new CANNON.Vec3(0.45, 0.35, 0.1))
+    const hairShape = new CANNON.Cylinder(this.cylinderRadius, 0.5, this.cylinderHeight, this.cylinderNumSegements)
 
     // Actual body/group
     this.headBody = new CANNON.Body({
@@ -131,14 +145,15 @@ export default class Physics {
       position: new CANNON.Vec3(...this.head.position),
     })
 
+    // damping is the easing back to 0 movement after collision
     this.headBody.linearDamping = 0.5
-    this.headBody.angularDamping = 0.5
+    this.headBody.angularDamping = 0.8
 
     // Apply shapes
-    this.headBody.addShape(this.baseSkullShape)
-    this.headBody.addShape(this.chinShape, new CANNON.Vec3(-0.05, -0.45, 0.25))
-    this.headBody.addShape(this.eyeShape, new CANNON.Vec3(-0.05, -0.1, 0.4))
-    this.headBody.addShape(this.hairShape, new CANNON.Vec3(0, 0.6, 0))
+    this.headBody.addShape(baseSkullShape)
+    this.headBody.addShape(chinShape, new CANNON.Vec3(-0.05, -0.45, 0.25))
+    this.headBody.addShape(eyeShape, new CANNON.Vec3(-0.05, -0.1, 0.4))
+    this.headBody.addShape(hairShape, new CANNON.Vec3(0, 0.6, 0))
 
     // Physics Material
     this.headBody.material = this.headMaterial
@@ -167,17 +182,66 @@ export default class Physics {
     )
 
     // this.constraint.collideConnected = false
-
     this.world.addConstraint(this.constraint)
+  }
+
+  setThongWeapon () {
+    // Set physic body
+    const shape = new CANNON.Box(new CANNON.Vec3(0.1, 0.5, 1))
+    this.thongBody = new CANNON.Body({ mass: 0, shape })
+    this.thongBody.material = this.rubberMaterial
+
+    // base position
+    this.thongBody.position.set(0, 0, 1)
+
+    console.log(this.mousePosition)
+
+
+    this.world.addBody(this.thongBody)
+  }
+
+  setCollisionListeners () {
+    this.headBody.addEventListener('collide', event => {
+      this.headBody.collisionResponse = 0
+      const relativeVelocity = event.contact.getImpactVelocityAlongNormal()
+      console.log({ relativeVelocity })
+      if(Math.abs(relativeVelocity) > 0.75) {
+        console.log('hard')
+      } else {
+        console.log('soft')
+      }
+
+      // TODO detect when collision "stops", ie the use has moved the thong away from the head
+      // Possibly show a loader / countdown timer to rehit
+      setTimeout(() => {
+        this.headBody.collisionResponse = 1
+      }, 1000)
+    })
+  }
+
+  setDebug () {
+    if (this.debug.active) {
+      // headDebugger
+      this.debugFolder.add(this.headBody, 'linearDamping').min(-1).max(1)
+      this.debugFolder.add(this.headBody, 'angularDamping').min(-1).max(1)
+    }
   }
 
   update () {
     this.world.step(1 / 60, this.time.delta, 3)
 
     if (this.ready) {
+      // Update head position
       this.head.position.copy(this.headBody.position)
       this.head.quaternion.copy(this.headBody.quaternion)
 
+      // Update weapon position
+
+      const distanceFromHead = this.camera.position.distanceTo(this.headBody.position) - 2
+      // console.log(distanceFromHead)
+      this.thongBody.position.set(this.mousePosition.position3D.x, this.mousePosition.position3D.y, 1.1)
+
+      // update CANNON debugger/visualiser
       if (this.debug.active) this.cannonDebugger.update()
     }
   }

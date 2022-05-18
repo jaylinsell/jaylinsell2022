@@ -109,8 +109,9 @@ export default class Head {
       moveSad
     } = this.headMesh.morphTargetDictionary
 
-    this.headMesh.morphTargetInfluences[moveMouth] = 0
+    this.headMesh.morphTargetInfluences[moveMouth] = 1
     this.headMesh.morphTargetInfluences[moveLeftEyebrow] = 0
+    this.headMesh.morphTargetInfluences[moveRightEyebrowAngry] = 0
   }
 
   setDebug () {

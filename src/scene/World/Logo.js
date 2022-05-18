@@ -16,8 +16,6 @@ export default class Logo {
       this.logoFolder.close()
     }
 
-
-
     this.setLogo()
     this.setDebug()
   }
@@ -36,6 +34,7 @@ export default class Logo {
     this.logoMesh.rotation.x = this.options.rotateX
     this.logoMesh.rotation.y = this.options.rotateY
     this.logoMesh.scale.set(this.options.scale, this.options.scale, this.options.scale)
+    this.logoMesh.castShadow = true
 
     // Center the geometry
     const position = new THREE.Vector3()
@@ -44,6 +43,9 @@ export default class Logo {
 
     this.logoMesh.position.x = -center.x + this.options.positionX
     this.logoMesh.position.y = -center.y
+    this.logoMesh.traverse(child => {
+      if (child instanceof THREE.Mesh) child.castShadow = true
+    })
 
     this.scene.add(this.logoMesh)
   }

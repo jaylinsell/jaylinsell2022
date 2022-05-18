@@ -32,18 +32,18 @@ export default class Physics {
         togglePhysicWireframes: true
       }
 
-      const meshes = []
-      this.cannonDebugger = new CannonDebugger(this.scene, this.world, {
-        onInit(body, mesh) {
-          meshes.push(mesh)
-          toggle.onChange(bool => {
-            meshes.forEach(_mesh => bool ? _mesh.visible = true : _mesh.visible = false)
+      // const meshes = []
+      // this.cannonDebugger = new CannonDebugger(this.scene, this.world, {
+      //   onInit(body, mesh) {
+      //     meshes.push(mesh)
+      //     toggle.onChange(bool => {
+      //       meshes.forEach(_mesh => bool ? _mesh.visible = true : _mesh.visible = false)
 
-          })
-        },
-        color: '#03bbff'
-      })
-      const toggle = this.debugFolder.add(obj, 'togglePhysicWireframes').name('Toggle Physics Wireframes')
+      //     })
+      //   },
+      //   color: '#03bbff'
+      // })
+      // const toggle = this.debugFolder.add(obj, 'togglePhysicWireframes').name('Toggle Physics Wireframes')
     }
 
     /**
@@ -98,7 +98,7 @@ export default class Physics {
     this.floorBody.material = this.concreteMaterial
     this.floorBody.addShape(this.floorShape)
 
-    this.floorBody.position.set(0, -2, 0)
+    this.floorBody.position.set(0, -1, 0)
     this.floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1, 0, 0), Math.PI * 0.5)
 
     this.world.addBody(this.floorBody)
@@ -146,8 +146,13 @@ export default class Physics {
     })
 
     // damping is the easing back to 0 movement after collision
-    this.headBody.linearDamping = 0.5
-    this.headBody.angularDamping = 0.8
+    this.headBody.linearDamping = 0.6
+    this.headBody.angularDamping = 0.9
+
+    console.log(this.headBody)
+
+    // restrict head movements to just the X and Z axis
+    this.headBody.angularFactor.set(0.8,0,1)
 
     // Apply shapes
     this.headBody.addShape(baseSkullShape)
@@ -192,19 +197,19 @@ export default class Physics {
     this.thongBody.material = this.rubberMaterial
 
     // base position
-    this.thongBody.position.set(0, 0, 1)
-
+    this.thongBody.position.set(0, 0, 0)
     console.log(this.mousePosition)
 
-
-    this.world.addBody(this.thongBody)
+    // this.world.addBody(this.thongBody)
   }
 
   setCollisionListeners () {
     this.headBody.addEventListener('collide', event => {
-      this.headBody.collisionResponse = 0
+      // this.headBody.collisionResponse = 0
+
       const relativeVelocity = event.contact.getImpactVelocityAlongNormal()
       console.log({ relativeVelocity })
+
       if(Math.abs(relativeVelocity) > 0.75) {
         console.log('hard')
       } else {
@@ -213,17 +218,27 @@ export default class Physics {
 
       // TODO detect when collision "stops", ie the use has moved the thong away from the head
       // Possibly show a loader / countdown timer to rehit
-      setTimeout(() => {
-        this.headBody.collisionResponse = 1
-      }, 1000)
+      // setTimeout(() => {
+      //   this.headBody.collisionResponse = 1
+      // }, 1000)
     })
   }
 
   setDebug () {
     if (this.debug.active) {
       // headDebugger
-      this.debugFolder.add(this.headBody, 'linearDamping').min(-1).max(1)
-      this.debugFolder.add(this.headBody, 'angularDamping').min(-1).max(1)
+      const headBodyPhysics = this.debugFolder.addFolder('headBodyPhysics')
+      headBodyPhysics.close()
+
+      headBodyPhysics.add(this.headBody, 'angularDamping').min(0).max(1).step(0.01).name('angular Damping')
+      headBodyPhysics.add(this.headBody.angularFactor, 'x').min(0).max(1).step(0.01).name('angularFactor X')
+      headBodyPhysics.add(this.headBody.angularFactor, 'y').min(0).max(1).step(0.01).name('angularFactor Y')
+      headBodyPhysics.add(this.headBody.angularFactor, 'z').min(0).max(1).step(0.01).name('angularFactor Z')
+
+      headBodyPhysics.add(this.headBody, 'linearDamping').min(0).max(1).step(0.01).name('linear Damping')
+      headBodyPhysics.add(this.headBody.linearFactor, 'x').min(0).max(1).step(0.01).name('linearFactor X')
+      headBodyPhysics.add(this.headBody.linearFactor, 'y').min(0).max(1).step(0.01).name('linearFactor Y')
+      headBodyPhysics.add(this.headBody.linearFactor, 'z').min(0).max(1).step(0.01).name('linearFactor Z')
     }
   }
 
@@ -242,7 +257,7 @@ export default class Physics {
       this.thongBody.position.set(this.mousePosition.position3D.x, this.mousePosition.position3D.y, 1.1)
 
       // update CANNON debugger/visualiser
-      if (this.debug.active) this.cannonDebugger.update()
+      // if (this.debug.active) this.cannonDebugger.update()
     }
   }
 }
